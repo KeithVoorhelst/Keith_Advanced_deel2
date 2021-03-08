@@ -1,0 +1,69 @@
+﻿Maak een Web API met:
+
+Database structuur: (Alles in de DB (en in c#) in het engels he!)
+
+	· Persoon
+
+		o Voornaam
+
+		o Achternaam
+
+		o Passwoord (Doe maar gewoon als string in textform)
+
+		o Email
+
+		o Geboortedatum
+
+		o 1 persoon kan veel huisdieren hebben
+
+		o Kan een huis hebben (niet verplicht, dus het huisid van deze table is niet verplicht in te vullen… mag dus ook null zijn )+
+
+	· Huisdier
+
+		o Naam
+
+		o Geboortedatum
+
+		o HuisdierType (opties zijn, Hond, Kat, Cavia, Goudvis, dus al zeker bv geen string!)
+
+		o 1 eigennaar(person) altijd verplicht
+
+	· Huis
+
+		o Straat
+
+		o Huisnr (string)
+
+		o Postcode (string)
+
+		o Gemeente
+
+		o Huis kan veel mensen hebben
+
+Endpoints: (Werk met DTOs, Automapper, DI (Dependency Injection) etc etc, all the good C# Stuff <3)
+
+	· Persoon:
+
+		o Create
+
+		o Login(IN Email en Password, OUT true als ze matchen (met de db) anders false)
+
+		o Change password (IN: Email, HuidigePasswoord, NewPasswoord, OUT: Ok() als de Email en Passwoord overeenkomen met wat er in de DB zitten, anders unauthorized )
+
+		o Delete(IN ID, Email, Password, Out OK of unauthorized)
+
+		o GetMyPets(UserID, OUT lijst van huisdieren)
+
+	· Huisdier
+
+		o Standaard CRUD (Read, doe maar voor 1 pet met ID en voor alle pets)
+
+		o ChangeOwner(IN: HuisdierId, newOwnerId, Out ???)
+
+		o GetAllPetsByType(??? OUT: List of pets)
+
+	· Huis
+
+		o Standaard CRUD
+
+		o GetAllHousesByPostal(???)
