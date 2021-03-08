@@ -13,8 +13,8 @@ namespace Keith_Advanced_deel2.Profiles
 
         public PetProfile()
         {
-            CreateMap<CreatePetDTO, Pet>()
-               .ReverseMap();
+            CreateMap<CreatePetDTO, Pet>().ReverseMap();
+            CreateMap<UpdatePetDTO, Pet>().ReverseMap();
         }
         
     }

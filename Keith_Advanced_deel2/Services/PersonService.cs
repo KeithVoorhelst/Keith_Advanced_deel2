@@ -10,10 +10,12 @@ namespace Keith_Advanced_deel2.Services
 {
     public class PersonService : IPersonService
     {
-        public Person CreatePerson(Person person)
+        public Person CreatePerson(Person person, int houseId)
         {
             using (var db = new PersonPetHouseContext())
             {
+                var house = db.Houses.FirstOrDefault(x => x.Id == houseId);
+                person.House = house;
                 db.Add(person);
                 db.SaveChanges();
                 return person;

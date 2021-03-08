@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Keith_Advanced_deel2.Db;
 using Keith_Advanced_deel2.DTO;
 using Keith_Advanced_deel2.DTO.PetDTO;
 using Keith_Advanced_deel2.Models;
@@ -27,13 +28,39 @@ namespace Keith_Advanced_deel2.Controllers
             _mapper = mapper;
         }
         [HttpPost("AddPet")]
-        public ActionResult<Pet> AddPet(CreatePetDTO createPetDTO)
+        public ActionResult<Pet> AddPet(CreatePetDTO createPetDTO, int personId)
         {
             var newPet = _mapper.Map<Pet>(createPetDTO);
-            Pet petToAddToDb = _petService.CreatePet(newPet);
+            Pet petToAddToDb = _petService.CreatePet(newPet, personId);
             return Ok(petToAddToDb);
-
-            
         }
+        [HttpGet ("AllPets")]
+        public ActionResult<List<Pet>> GetAllPets()
+        {
+            return Ok(_petService.GetAllPets());
+        }
+        [HttpGet("PetById")]
+        public ActionResult<Pet> GetPetById(int petId)
+        {
+            var pet = _petService.GetPetById(petId);
+            if (pet == null)
+            {
+                return NotFound();
+            }
+            return Ok(pet);
+        }
+        [HttpPut("UpdatePetById")]
+        public ActionResult<Pet> UpdatePetById(int petId, Pet petEditValues)
+        {
+            var pet = _petService.UpdatePetById(petId, petEditValues);
+            return Ok(pet);
+        }
+        [HttpDelete ("DeletePetById")]
+        public ActionResult<Pet> DeletePetById(int petId)
+        {
+            var pet = _petService.DeletePetById(petId);
+            return Ok(pet);
+        }
+        
     }
 }

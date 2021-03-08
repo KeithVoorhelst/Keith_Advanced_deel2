@@ -24,10 +24,10 @@ namespace Keith_Advanced_deel2.Controllers
             _mapper = mapper;
         }
         [HttpPost ("AddPerson")]
-        public ActionResult<Person> AddPerson(CreatePersonDTO createPersonDTO)
+        public ActionResult<Person> AddPerson(CreatePersonDTO createPersonDTO, int houseId)
         {
             var newPerson = _mapper.Map<Person>(createPersonDTO);
-            _personService.CreatePerson(newPerson);
+            _personService.CreatePerson(newPerson, houseId);
             return Ok();
         }
         [HttpPost ("Login")]
