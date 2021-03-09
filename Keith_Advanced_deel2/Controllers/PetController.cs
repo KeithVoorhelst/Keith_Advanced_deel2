@@ -55,6 +55,12 @@ namespace Keith_Advanced_deel2.Controllers
             var pet = _petService.UpdatePetById(petId, petEditValues);
             return Ok(pet);
         }
+        [HttpPut("ChangeOwner")]
+        public ActionResult<Pet> ChangeOwner(int petId, int newOwnerId)
+        {
+            var pet = _petService.ChangeOwner(petId, newOwnerId);
+            return Ok(pet);
+        }
         [HttpDelete ("DeletePetById")]
         public ActionResult<Pet> DeletePetById(int petId)
         {

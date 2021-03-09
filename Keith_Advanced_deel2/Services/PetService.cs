@@ -63,6 +63,17 @@ namespace Keith_Advanced_deel2.Services
             }
         }
 
-
+        public Pet ChangeOwner(int petId, int newOwnerId)
+        {
+            using (var db = new PersonPetHouseContext())
+            {
+                var petToChange = db.Pets.FirstOrDefault(p => p.Id == petId);
+                var newPetOwner = db.Persons.FirstOrDefault(p => p.Id == newOwnerId);
+                petToChange.Person = newPetOwner;
+                db.Pets.Update(petToChange);
+                db.SaveChanges();
+                return petToChange;
+            }
+        }
     }
 }

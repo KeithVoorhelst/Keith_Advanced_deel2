@@ -10,6 +10,6 @@ namespace Keith_Advanced_deel2.DTO.PetDTO
     {
         public string Name { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public string Type { get; set; }
+        public Enum PetType { get; set; }
     }
 }

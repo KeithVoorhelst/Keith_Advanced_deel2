@@ -14,5 +14,6 @@ namespace Keith_Advanced_deel2.Services.Interfaces
         public Pet GetPetById(int petId);
         public Pet UpdatePetById(int petId, Pet petEditValues);
         public Pet DeletePetById(int petId);
+        public Pet ChangeOwner(int petId, int newOwner);
     }
 }

@@ -48,6 +48,12 @@ namespace Keith_Advanced_deel2.Controllers
         {
             return Ok(_houseService.GetAllHouses());
         }
+        [HttpGet("GetAllHousesByPostal")]
+        public ActionResult<List<House>> GetAllHousesByPostal(string postalCode)
+        {
+            var houses = _houseService.GetAllHousesByPostal(postalCode);
+            return Ok(houses);
+        }
         [HttpPut("UpdateHouseById")]
         public ActionResult<House> UpdateHouseById(int houseId, House houseEditValues)
         {

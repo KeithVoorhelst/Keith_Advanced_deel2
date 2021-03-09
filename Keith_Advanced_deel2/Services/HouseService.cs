@@ -61,5 +61,22 @@ namespace Keith_Advanced_deel2.Services
                 return houseToDelete;
             }
         }
+
+        public List<House> GetAllHousesByPostal(string postalCode)
+        {
+            using (var db = new PersonPetHouseContext())
+            {
+
+                List<House> listOfHouses = new List<House>();
+                foreach (var house in db.Houses)
+                {
+                    if (house.PostalCode == postalCode)
+                    {
+                        listOfHouses.Add(house);
+                    }
+                }
+                return listOfHouses;
+            }
+        }
     }
 }

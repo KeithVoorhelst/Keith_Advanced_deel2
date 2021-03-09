@@ -43,6 +43,11 @@ namespace Keith_Advanced_deel2.Controllers
 
             
         }
+        [HttpGet ("GetMyPets")]
+        public ActionResult<List<Pet>> GetMyPets(int personId)
+        {
+            return _personService.GetMyPets(personId);
+        }
         [HttpPut ("ChangePassword")]
         public ActionResult ChangePassword(ChangePasswordDTO changePasswordDTO)
         {

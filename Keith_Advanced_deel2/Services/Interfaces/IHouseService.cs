@@ -13,6 +13,7 @@ namespace Keith_Advanced_deel2.Services.Interfaces
         public House UpdateHouseById(int houseId, House houseEditValues);
         public List<House> GetAllHouses();
         public House DeleteHouseById(int houseId);
+        public List<House> GetAllHousesByPostal(string postalCode);
 
     }
 }

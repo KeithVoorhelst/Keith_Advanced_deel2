@@ -59,6 +59,15 @@ namespace Keith_Advanced_deel2.Services
                 return personToDelete;
             }
         }
-        
+
+        public List<Pet> GetMyPets(int personId)
+        {
+            using (var db = new PersonPetHouseContext())
+            {
+                var person = db.Persons.FirstOrDefault(x => x.Id == personId);
+                var myPets = person.Pets.ToList();
+                return myPets;
+            }
+        }
     }
 }
