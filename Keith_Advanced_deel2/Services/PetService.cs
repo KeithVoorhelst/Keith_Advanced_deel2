@@ -10,17 +10,12 @@ namespace Keith_Advanced_deel2.Services
 {
     public class PetService : IPetService
     {
-        public Pet CreatePet(Pet pet, int personId)
+        public void CreatePet(Pet pet)
         {
             using (var db = new PersonPetHouseContext())
             {
-                
-                var petOwner = db.Persons.FirstOrDefault(x => x.Id == personId);
-                pet.Person = petOwner;
-                db.Add(pet);
+                db.Pets.Add(pet);
                 db.SaveChanges();
-                return pet;
-
             }
         }
         public List<Pet> GetAllPets()
@@ -52,14 +47,21 @@ namespace Keith_Advanced_deel2.Services
                 return petToUpdate;
             }
         }
-        public Pet DeletePetById(int petId)
+        public void DeletePetById(int petId)
         {
             using (var db = new PersonPetHouseContext())
             {
                 var petToDelete = db.Pets.FirstOrDefault(x => x.Id == petId);
-                db.Pets.Remove(petToDelete);
-                db.SaveChanges();
-                return petToDelete;
+                if (petToDelete != null)
+                {
+                    db.Pets.Remove(petToDelete);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    throw new UnauthorizedAccessException("invalid pet id");
+                }
+                
             }
         }
 

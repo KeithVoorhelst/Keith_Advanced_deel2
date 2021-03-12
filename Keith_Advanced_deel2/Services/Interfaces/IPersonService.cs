@@ -8,10 +8,10 @@ namespace Keith_Advanced_deel2.Services.Interfaces
 {
     public interface IPersonService
     {
-        public Person CreatePerson(Person person, int houseId);
-        public Person Login(string email, string password);
-        public Person ChangePassword(string email, string password, string newPassword);
-        public Person DeletePerson(int Id, string email, string password);
-        public List<Pet> GetMyPets(int PersonId);
+        void ChangePassword(string email, string currentPassword, string newPassword);
+        void CreatePerson(Person person);
+        void DeletePerson(int id, string email, string currentPassword);
+        List<Pet> GetMyPets(int personId);
+        bool Login(string email, string password);
     }
 }

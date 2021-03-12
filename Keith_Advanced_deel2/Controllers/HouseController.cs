@@ -55,9 +55,10 @@ namespace Keith_Advanced_deel2.Controllers
             return Ok(houses);
         }
         [HttpPut("UpdateHouseById")]
-        public ActionResult<House> UpdateHouseById(int houseId, House houseEditValues)
+        public ActionResult<House> UpdateHouseById(int houseId, UpdateHouseDTO updateHouseDTO)
         {
-            var house = _houseService.UpdateHouseById(houseId, houseEditValues);
+            var house = _mapper.Map<House>(updateHouseDTO);
+            _houseService.UpdateHouseById(houseId, house);
             return Ok(house);
         }
         [HttpDelete("DeleteHouseById")]

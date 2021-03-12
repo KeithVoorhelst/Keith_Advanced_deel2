@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Keith_Advanced_deel2.DTO;
+using Keith_Advanced_deel2.DTO.PetDTO;
 using Keith_Advanced_deel2.Models;
 using Keith_Advanced_deel2.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -23,52 +24,50 @@ namespace Keith_Advanced_deel2.Controllers
             _personService = personService;
             _mapper = mapper;
         }
-        [HttpPost ("AddPerson")]
-        public ActionResult<Person> AddPerson(CreatePersonDTO createPersonDTO, int houseId)
+        [HttpPost("Create")]
+        public ActionResult Create(CreatePersonDTO createPersonDTO)
         {
-            var newPerson = _mapper.Map<Person>(createPersonDTO);
-            _personService.CreatePerson(newPerson, houseId);
+            var personFromDTO = _mapper.Map<Person>(createPersonDTO);
+            _personService.CreatePerson(personFromDTO);
             return Ok();
         }
-        [HttpPost ("Login")]
-        public ActionResult<bool> Login (LoginPersonDTO loginPersonDTO)
+        [HttpGet("Login")]
+        public ActionResult<bool> Login(string email, string password)
         {
-            var PersonToLogin = _personService.Login(loginPersonDTO.Email, loginPersonDTO.Password);
-
-            if (PersonToLogin == null)
+            return Ok(_personService.Login(email, password));
+        }
+        [HttpGet("ChangePassword")]
+        public ActionResult ChangePassword(string email, string currentPassword, string newPassword)
+        {
+            try
             {
-                return Ok(false);
+                _personService.ChangePassword(email, currentPassword, newPassword);
             }
-            return Ok(true);
-
-            
-        }
-        [HttpGet ("GetMyPets")]
-        public ActionResult<List<Pet>> GetMyPets(int personId)
-        {
-            return _personService.GetMyPets(personId);
-        }
-        [HttpPut ("ChangePassword")]
-        public ActionResult ChangePassword(ChangePasswordDTO changePasswordDTO)
-        {
-
-            var PersonToChange = _personService.ChangePassword(changePasswordDTO.Email, changePasswordDTO.Password, changePasswordDTO.NewPassword);
-            if (PersonToChange == null)
+            catch (UnauthorizedAccessException)
             {
-                return new UnauthorizedResult();
+                return Unauthorized();
             }
             return Ok();
         }
-        [HttpDelete("DeletePerson")]
-        public ActionResult DeletePerson(DeletePersonDTO deletePersonDTO)
+        [HttpDelete("Delete")]
+        public ActionResult Delete(int id, string email, string currentPassword)
         {
-            var personToDelete = _personService.DeletePerson(deletePersonDTO.Id, deletePersonDTO.Email, deletePersonDTO.Password);
-            if (personToDelete == null)
+            try
             {
-                return new UnauthorizedResult();
+                _personService.DeletePerson(id, email, currentPassword);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized();
             }
             return Ok();
+        }
+        [HttpGet("GetMyPets")]
+        public ActionResult<List<GetPetDTO>> GetMyPets(int personId)
+        {
+            var pets = _personService.GetMyPets(personId);
+            var convertedPets = _mapper.Map<List<GetPetDTO>>(pets);
+            return Ok(convertedPets);
         }
     }
-    
 }

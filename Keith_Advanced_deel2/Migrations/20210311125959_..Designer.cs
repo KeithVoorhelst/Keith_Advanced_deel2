@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Keith_Advanced_deel2.Migrations
 {
     [DbContext(typeof(PersonPetHouseContext))]
-    [Migration("20210305145139_houseInContext")]
-    partial class houseInContext
+    [Migration("20210311125959_.")]
+    partial class _
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -87,8 +87,8 @@ namespace Keith_Advanced_deel2.Migrations
                     b.Property<int?>("PersonId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

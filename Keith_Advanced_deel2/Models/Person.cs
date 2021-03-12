@@ -10,13 +10,12 @@ namespace Keith_Advanced_deel2.Models
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Password { get; set; }
         public string Email { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public string Password { get; set; }
+        public DateTime BirthDate { get; set; }
         public List<Pet> Pets { get; set; }
-#nullable enable
-        public House? House { get; set; }
-#nullable disable
+        public int? HouseId { get; set; }
+        public House House { get; set; }
 
     }
 }

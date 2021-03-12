@@ -10,64 +10,65 @@ namespace Keith_Advanced_deel2.Services
 {
     public class PersonService : IPersonService
     {
-        public Person CreatePerson(Person person, int houseId)
+        public void CreatePerson(Person person)
         {
             using (var db = new PersonPetHouseContext())
             {
-                var house = db.Houses.FirstOrDefault(x => x.Id == houseId);
-                person.House = house;
-                db.Add(person);
+                db.Persons.Add(person);
                 db.SaveChanges();
-                return person;
-
             }
         }
-        public Person Login(string email, string password)
+        public bool Login(string email, string password)
         {
-            using (var db = new PersonPetHouseContext())
+            using var db = new PersonPetHouseContext();
+            var personByEmail = db.Persons.FirstOrDefault(person => person.Email == email);
+            if (personByEmail.Password == password)
             {
-                var personToLogin = db.Persons.FirstOrDefault(x => x.Email == email && x.Password == password);
-
-                return personToLogin;
+                return true;
             }
+            return false;
         }
-        public Person ChangePassword(string email, string password, string newPassword)
+        public void ChangePassword(string email, string currentPassword, string newPassword)
         {
-            using (var db = new PersonPetHouseContext())
+            using var db = new PersonPetHouseContext();
+            var currentUserByEmailAndPw = db.Persons.FirstOrDefault(x => x.Email == email && x.Password == currentPassword);
+            if (currentUserByEmailAndPw != null)
             {
-                var personToChangePW = Login(email, password);
-                if (personToChangePW == null)
-                {
-                    return null;
-                }
-                personToChangePW.Password = newPassword;
-                db.Update(personToChangePW);
+                currentUserByEmailAndPw.Password = newPassword;
+                db.Persons.Update(currentUserByEmailAndPw);
                 db.SaveChanges();
-                return personToChangePW;
+            }
+            else
+            {
+                throw new UnauthorizedAccessException("invalid email and/or currentpassword");
             }
         }
-        public Person DeletePerson(int Id, string email, string password)
+        public void DeletePerson(int id, string email, string currentPassword)
         {
-            using (var db = new PersonPetHouseContext())
+            using var db = new PersonPetHouseContext();
+            var currentUserByEmailAndPwAndId = db.Persons
+                .FirstOrDefault(x => x.Email == email && x.Password == currentPassword && x.Id == id);
+            if (currentUserByEmailAndPwAndId != null)
             {
-                var personToDelete = Login(email, password);
-                if (personToDelete != null)
-                {
-                    db.Persons.Remove(personToDelete);
-                    db.SaveChanges();
-                }
-                return personToDelete;
+                db.Persons.Remove(currentUserByEmailAndPwAndId);
+                db.SaveChanges();
+            }
+            else
+            {
+                throw new UnauthorizedAccessException("invalid email and/or currentpassword and/or id");
             }
         }
 
         public List<Pet> GetMyPets(int personId)
         {
-            using (var db = new PersonPetHouseContext())
-            {
-                var person = db.Persons.FirstOrDefault(x => x.Id == personId);
-                var myPets = person.Pets.ToList();
-                return myPets;
-            }
+            using var db = new PersonPetHouseContext();
+            // get person, join the pets
+            //var personWithPets = db.Persons.Include(x => x.Pets).FirstOrDefault(x => x.Id == personId);
+            //return personWithPets.Pets;
+
+            // haal alle pets met de juiste personid op
+            var listOfPets = db.Pets.Where(x => x.PersonId == personId).ToList();
+            return listOfPets;
         }
     }
 }

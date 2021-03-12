@@ -3,14 +3,16 @@ using System;
 using Keith_Advanced_deel2.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Keith_Advanced_deel2.Migrations
 {
     [DbContext(typeof(PersonPetHouseContext))]
-    partial class PersonPetHouseContextModelSnapshot : ModelSnapshot
+    [Migration("20210312090655_petmodel add person id not nullable")]
+    partial class petmodeladdpersonidnotnullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -15,6 +15,7 @@ namespace Keith_Advanced_deel2.Profiles
         {
             CreateMap<CreatePetDTO, Pet>().ReverseMap();
             CreateMap<UpdatePetDTO, Pet>().ReverseMap();
+            CreateMap<ChangeOwnerDTO, Pet>().ReverseMap();
         }
         
     }

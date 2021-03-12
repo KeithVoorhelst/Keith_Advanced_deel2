@@ -12,5 +12,6 @@ namespace Keith_Advanced_deel2.DTO
         public string Password { get; set; }
         public string Email { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public int? HouseId { get; set; }
     }
 }

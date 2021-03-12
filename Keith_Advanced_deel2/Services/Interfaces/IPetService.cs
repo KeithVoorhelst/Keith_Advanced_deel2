@@ -9,11 +9,11 @@ namespace Keith_Advanced_deel2.Services.Interfaces
 {
     public interface IPetService
     {
-        public Pet CreatePet(Pet pet, int personId);
+        public void CreatePet(Pet pet);
         public List<Pet> GetAllPets();
         public Pet GetPetById(int petId);
         public Pet UpdatePetById(int petId, Pet petEditValues);
-        public Pet DeletePetById(int petId);
+        public void DeletePetById(int petId);
         public Pet ChangeOwner(int petId, int newOwner);
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace Keith_Advanced_deel2.Models
 {
@@ -13,31 +14,7 @@ namespace Keith_Advanced_deel2.Models
         public string Name { get; set; }
         public DateTime DateOfBirth { get; set; }
         public PetType Type { get; set; }
+        public int? PersonId { get; set; }
         public Person Person { get; set; }
-
-        //private string type;
-        //public string Type
-        //{
-        //    get { return type; }
-        //    set
-        //    {
-        //        if (value == "Hond" || value == "Kat" || value == "Cavia" || value == "Goudvis")
-        //        {
-        //            type = value;
-        //        }
-        //        else
-        //        {
-        //            type = "unauthorized ";
-        //        }
-        //    }
-        //}
-
-    }
-    public enum PetType
-    {
-        Cat,
-        Dog,
-        GuineaPig,
-        Goldfish,
     }
 }

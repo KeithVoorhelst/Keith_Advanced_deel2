@@ -18,21 +18,19 @@ namespace Keith_Advanced_deel2.Controllers
     public class PetController : ControllerBase
     {
         private readonly IPetService _petService;
-        private readonly IPersonService _personService;
         private readonly IMapper _mapper;
 
-        public PetController(IPetService petService, IPersonService personService, IMapper mapper)
+        public PetController(IPetService petService, IMapper mapper)
         {
             _petService = petService;
-            _personService = personService;
             _mapper = mapper;
         }
         [HttpPost("AddPet")]
-        public ActionResult<Pet> AddPet(CreatePetDTO createPetDTO, int personId)
+        public ActionResult<Pet> AddPet(CreatePetDTO createPetDTO)
         {
-            var newPet = _mapper.Map<Pet>(createPetDTO);
-            Pet petToAddToDb = _petService.CreatePet(newPet, personId);
-            return Ok(petToAddToDb);
+            var petFromDTO = _mapper.Map<Pet>(createPetDTO);
+            _petService.CreatePet(petFromDTO);
+            return Ok();
         }
         [HttpGet ("AllPets")]
         public ActionResult<List<Pet>> GetAllPets()
@@ -50,22 +48,33 @@ namespace Keith_Advanced_deel2.Controllers
             return Ok(pet);
         }
         [HttpPut("UpdatePetById")]
-        public ActionResult<Pet> UpdatePetById(int petId, Pet petEditValues)
+        public ActionResult<Pet> UpdatePetById(int petId, UpdatePetDTO updatePetDTO)
         {
-            var pet = _petService.UpdatePetById(petId, petEditValues);
+            var pet = _mapper.Map<Pet>(updatePetDTO);
+            _petService.UpdatePetById(petId, pet);
             return Ok(pet);
         }
         [HttpPut("ChangeOwner")]
-        public ActionResult<Pet> ChangeOwner(int petId, int newOwnerId)
+        public ActionResult<Pet> ChangeOwner(int petId, ChangeOwnerDTO changeOwnerDTO)
         {
-            var pet = _petService.ChangeOwner(petId, newOwnerId);
+            var pet = _mapper.Map<Pet>(changeOwnerDTO);
+                _petService.ChangeOwner(petId, changeOwnerDTO.PersonId);
             return Ok(pet);
         }
         [HttpDelete ("DeletePetById")]
         public ActionResult<Pet> DeletePetById(int petId)
         {
-            var pet = _petService.DeletePetById(petId);
-            return Ok(pet);
+            {
+                try
+                {
+                    _petService.DeletePetById(petId);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    return Unauthorized();
+                }
+                return Ok();
+            }
         }
         
     }
